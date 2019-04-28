@@ -111,8 +111,16 @@ namespace DispatchingSystemPOM.TestCases
             customersPage.clickOnCreateNewBtn();
             customersPage.inputContactDetails();
             customersPage.selectCheckBox();
-            //check whether the billing contact details updated or not
-
+            //check whether the billing contact details button is disabled or not
+            if (customersPage.isBillingContactBtnDisabled()) 
+            {
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "Billing contact button is disabled when we select checkbox");
+                Assert.True(true);
+            } else
+            {
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Fail, "Button shouldn't be enabled");
+                Assert.Fail();
+            }
 
         }
         [Test]

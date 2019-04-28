@@ -144,13 +144,10 @@ namespace DispatchingSystemPOM.WebPages
         {
             ExtensionMethods.clickByXpath(sameAsAboveChkBox);
         }
-        public bool isBtnDisabled()
+        public bool isBillingContactBtnDisabled()
         {
-            if ()
-            {
-                return true;
-            } else
-                return false;
+            return(ExtensionMethods.isWebelementByCssDisabled(editBillingContactBtnCss));
         }
+        
     }
 }

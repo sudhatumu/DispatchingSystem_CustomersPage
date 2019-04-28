@@ -76,6 +76,24 @@ namespace DispatchingSystemPOM.CommonUtilities
                 return false;
             }
         }
+        public static bool isWebelementByXpathDisabled(string xpath)
+        {
+            if (driver.FindElement(By.XPath(xpath)).GetAttribute("disabled")!=null)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public static bool isWebelementByCssDisabled(string css)
+        {
+            if (driver.FindElement(By.CssSelector(css)).GetAttribute("disabled") != null)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         public static void waitUntilElementLocatedByXpath(String xpath, long timeOutInSeconds)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeOutInSeconds));
