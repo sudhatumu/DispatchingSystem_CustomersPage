@@ -95,12 +95,10 @@ namespace DispatchingSystemPOM.TestCases
         public void TC01_05_CreateNewSave()
         {
             BrowserManagement.test = BrowserManagement.report.StartTest("Create new record with all inputs");
-            customersPage.clickOnCreateNewBtn();
-            customersPage.inputContactDetails();
-            customersPage.inputBillingContactDetails();
-            customersPage.clickSaveBtn();
+            customersPage.createNewRecord();
             //customersPage.createNewCustomerRecord();
-            //need to add assertion
+
+            //need to add assertion - system is not returning any message that contact has saved, but record has saved in list
             BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "New record created successfully");
         }
         
@@ -124,18 +122,59 @@ namespace DispatchingSystemPOM.TestCases
 
         }
         [Test]
-        public void TC07_CreateNewSaveWithChkBox()
+        public void TC01_07_CreateNewSaveWithChkBox()
         {
+            customersPage.clickOnCreateNewBtn();
+            customersPage.inputContactDetails();
+            customersPage.selectCheckBox();
+            customersPage.clickSaveBtn();
+            //need to add assertion - not getting any message that the record has saved
+        }
+        [Test]
+        public void TC01_08_CreateNewChkCustomersList()
+        {
+
+            //checking whether the new record is displayed in the last page
+            //create new record before checking 
+            customersPage.createNewRecord();
+            //------
+
+            BrowserManagement.test = BrowserManagement.report.StartTest("Test for presence of the created new record  in Customers table");
+            dashboardPage.navigateToCustomersPage();
+
+            customersPage.goToLastPage();
+           if(customersPage.checkLastRowName())
+            {
+                Assert.IsTrue(true);
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "Record present at the last position of the customer table");
+            } else
+            {
+                Assert.Fail();
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Fail, "Record not saved at the last position of the customer table");
+            }
 
         }
         [Test]
-        public void TC08_CreateNewChkCustomersList()
+        public void TC01_09_CreateNewChkTotalLable()
         {
+            
+            BrowserManagement.test = BrowserManagement.report.StartTest("Total number of records Test");
+            int prevCount = customersPage.getTotalRecordCount();  //get the total count before creating new record
 
-        }
-        [Test]
-        public void TC09_CreateNewChkTotalLable()
-        {
+            customersPage.createNewRecord();  // create new record
+            dashboardPage.navigateToCustomersPage();
+            int currentCount = customersPage.getTotalRecordCount();   // get the total count again to check the Total number of record updation
+
+            if (currentCount.Equals(prevCount + 1))
+            {
+                Assert.True(true);
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "total Count has updated properly");
+            } else
+            {
+                Assert.Fail("Total count is not updated propertly");
+            }
+
+
 
         }
         [TearDown]

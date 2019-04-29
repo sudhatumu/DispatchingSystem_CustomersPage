@@ -94,6 +94,18 @@ namespace DispatchingSystemPOM.CommonUtilities
             else
                 return false;
         }
+        public static string getWebelementTextByXpath(string xpath)
+        {
+            
+            string text = driver.FindElement(By.XPath(xpath)).Text;
+            if(text!= null)
+            {
+                return text;
+            } else
+            {
+                return null;
+            }
+        }
         public static void waitUntilElementLocatedByXpath(String xpath, long timeOutInSeconds)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeOutInSeconds));

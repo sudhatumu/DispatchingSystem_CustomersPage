@@ -22,6 +22,8 @@ namespace DispatchingSystemPOM.WebPages
         string phoneCss = "#Phone";
         string saveBtnCss = "input[type='submit'][id = 'submitButton']";
 
+        string lastCustomerRecordName = "//table[@role = 'grid']/tbody/tr[last()]/td[2]";
+        string totalRecordsXpath = "//table//tr[@class = 'k-footer-template']/td[2]";
         string editBtnXpath = "//a[text() = 'Edit']"; //getting the first edit button
         string deleteBtnXpath = "//a[text() = 'Delete']";
         string goToFirstPageBtnXpath = "//a[@title = 'Go to the first page']";
@@ -129,10 +131,24 @@ namespace DispatchingSystemPOM.WebPages
         {
             try
             {
-                //clickOnCreateNewBtn();
-                //inputContactDetails();
-                //inputBillingContactDetails();
+
                 ExtensionMethods.clickByCssSelector(saveBtnCss);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public void createNewRecord()
+        {
+            //create new record 
+            try
+            {
+                clickOnCreateNewBtn();
+                inputContactDetails();
+                inputBillingContactDetails();
+                clickSaveBtn();
             }
             catch (Exception ex)
             {
@@ -142,11 +158,67 @@ namespace DispatchingSystemPOM.WebPages
         }
         public void selectCheckBox()
         {
-            ExtensionMethods.clickByXpath(sameAsAboveChkBox);
+            try
+            {
+                ExtensionMethods.clickByXpath(sameAsAboveChkBox); // select the 'SameAsAbove' check box
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public bool isBillingContactBtnDisabled()
         {
+            //EditBillingContact button will be disabled when we select the SameAsAbove checkbox
             return(ExtensionMethods.isWebelementByCssDisabled(editBillingContactBtnCss));
+        }
+        public void goToLastPage()
+        {
+            try
+            {
+                ExtensionMethods.waitUntilElementLocatedByXpath(goToLastPageBtnXpath, 4);
+                Thread.Sleep(3000);
+                ExtensionMethods.clickByXpath(goToLastPageBtnXpath);  //go to the last page
+            }
+            catch (Exception)
+            {
+
+                throw;
+            } 
+        }
+        public bool checkLastRowName()
+        {
+            try
+            {
+                //return true, if our record name is present at the last row of customer records 
+                ExtensionMethods.waitUntilElementLocatedByXpath(lastCustomerRecordName, 5);
+                if ((ExtensionMethods.getWebelementTextByXpath(lastCustomerRecordName)) == Resources.name)
+                {
+                    return true;
+                }
+                else
+                    return false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public int getTotalRecordCount()
+        {
+            //get the total number of records before creating new record
+            
+            Thread.Sleep(2000);
+            ExtensionMethods.waitUntilElementLocatedByXpath(totalRecordsXpath, 7);
+            String totalNumText = ExtensionMethods.getWebelementTextByXpath(totalRecordsXpath);
+            String valueTotalStr = totalNumText.Substring(7, 3);
+            int valueTotalInt = int.Parse(valueTotalStr);
+            return valueTotalInt;
+            //create a new record
+
         }
         
     }
