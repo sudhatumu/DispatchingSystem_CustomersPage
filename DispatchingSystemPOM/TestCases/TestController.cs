@@ -140,9 +140,9 @@ namespace DispatchingSystemPOM.TestCases
             //------
 
             BrowserManagement.test = BrowserManagement.report.StartTest("Test for presence of the created new record  in Customers table");
-            dashboardPage.navigateToCustomersPage();
+            dashboardPage.navigateToCustomersPage(); // go to the customers page
 
-            customersPage.goToLastPage();
+            customersPage.goToLastPage();  //go to the last page and check the last record 
            if(customersPage.checkLastRowName())
             {
                 Assert.IsTrue(true);
@@ -162,7 +162,7 @@ namespace DispatchingSystemPOM.TestCases
             int prevCount = customersPage.getTotalRecordCount();  //get the total count before creating new record
 
             customersPage.createNewRecord();  // create new record
-            dashboardPage.navigateToCustomersPage();
+            dashboardPage.navigateToCustomersPage(); //go to the Customers page
             int currentCount = customersPage.getTotalRecordCount();   // get the total count again to check the Total number of record updation
 
             if (currentCount.Equals(prevCount + 1))
