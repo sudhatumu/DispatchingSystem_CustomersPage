@@ -188,13 +188,53 @@ namespace DispatchingSystemPOM.TestCases
             BrowserManagement.flushReport();
         }
     }
+    //// Test Fixture 2
     [TestFixture]
-    class CreateNewNegativeTestScenarios
+    class EditDeleteTestScenario    //For Edit and Delete test scenario
     {
-        [Test]
-        public void TC01_Test()
+        LoginPage loginPage;
+        DashboardPage dashboardPage;
+        CustomersPage customersPage;
+
+        [OneTimeSetUp]
+        public void ClassInit()
         {
-            Assert.IsTrue(true);
+
+            BrowserManagement.InitExtentReport();
+
+        }
+        [SetUp]
+        public void TestInit()
+        {
+            BrowserManagement.openBrowser();
+            loginPage = new LoginPage();
+            dashboardPage = loginPage.loginMethod();
+            customersPage = dashboardPage.navigateToCustomersPage();
+        }
+        [Test]
+        public void TC03_01_verifyEditBtn()
+        {
+            BrowserManagement.test = BrowserManagement.report.StartTest("Test for Edit button");
+            customersPage.goToLastPage();
+            if(customersPage.editFormWindowTilteCheck())
+            {
+                Assert.True(true);
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "User navigates to the correct page");
+            } else
+            {
+                Assert.Fail();
+                BrowserManagement.test.Log(RelevantCodes.ExtentReports.LogStatus.Fail, "Edit form title not matched");
+            }
+        }
+        [TearDown]
+        public void TestCleanup()
+        {
+             BrowserManagement.closeBrowser();
+        }
+        [OneTimeTearDown]
+        public void ClassCleanup()
+        {
+            BrowserManagement.flushReport();
         }
     }
 }

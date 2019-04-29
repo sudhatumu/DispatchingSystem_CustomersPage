@@ -68,6 +68,7 @@ namespace DispatchingSystemPOM.CommonUtilities
 
         public static bool IsWebelementByXpathEnabled(string xpath)
         {
+            waitUntilElementLocatedByXpath(xpath, 5);
             if(driver.FindElement(By.XPath(xpath)).Enabled)
             {
                 return true;
@@ -98,6 +99,7 @@ namespace DispatchingSystemPOM.CommonUtilities
         {
             
             string text = driver.FindElement(By.XPath(xpath)).Text;
+
             if(text!= null)
             {
                 return text;

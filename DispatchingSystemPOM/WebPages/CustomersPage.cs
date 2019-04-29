@@ -22,9 +22,11 @@ namespace DispatchingSystemPOM.WebPages
         string phoneCss = "#Phone";
         string saveBtnCss = "input[type='submit'][id = 'submitButton']";
 
-        string lastCustomerRecordName = "//table[@role = 'grid']/tbody/tr[last()]/td[2]";
+        string lastCustomerRecordName = "//table[@role = 'grid']/tbody/tr[last()]/td[2]";  //last record from the customer table page
         string totalRecordsXpath = "//table//tr[@class = 'k-footer-template']/td[2]";
-        string editBtnXpath = "//a[text() = 'Edit']"; //getting the first edit button
+        //string editBtnXpath = "//a[text() = 'Edit']"; //getting the first edit button
+        string editBtnXpath = "//table//tr[last()]//td/a[contains(text(), 'Edit')]"; // Edit button xpath of the last record in the table
+        string editBtnFormTitle = "//span[@id = 'detailWindow_wnd_title']"; // Title of the Edit form
         string deleteBtnXpath = "//a[text() = 'Delete']";
         string goToFirstPageBtnXpath = "//a[@title = 'Go to the first page']";
         string goToPrevPageBtnXpath = "//a[@title = 'Go to the previous page']";
@@ -219,6 +221,34 @@ namespace DispatchingSystemPOM.WebPages
             return valueTotalInt;
             //create a new record
 
+        }
+        public bool editFormWindowTilteCheck()
+        {
+            //check for the last record
+
+            //if the Edit button is enabled, click on it and return the title of the Edit form
+            try
+            {
+                if (ExtensionMethods.IsWebelementByXpathEnabled(editBtnXpath))
+                {
+                    ExtensionMethods.clickByXpath(editBtnXpath);
+                   // ExtensionMethods.driver.SwitchTo().Frame(0);
+                    if (ExtensionMethods.getWebelementTextByXpath(editBtnFormTitle) == Resources.editformtitle)
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
+
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         
     }

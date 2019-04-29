@@ -70,6 +70,15 @@ namespace DispatchingSystemPOM.Inputs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Client.
+        /// </summary>
+        internal static string editformtitle {
+            get {
+                return ResourceManager.GetString("editformtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sri.
         /// </summary>
         internal static string firstname {

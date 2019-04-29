@@ -120,6 +120,9 @@
   <data name="browser" xml:space="preserve">
     <value>chrome</value>
   </data>
+  <data name="editformtitle" xml:space="preserve">
+    <value>Edit Client</value>
+  </data>
   <data name="firstname" xml:space="preserve">
     <value>Sri</value>
     <comment>FirstName in Edit contacts in new customer page</comment>
